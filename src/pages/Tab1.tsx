@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCard, IonCardHeader, IonCardContent } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonCard, IonCardHeader, IonLoading } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import Mathfield from '../components/mathlive/Mathfield';
 import QuestionModal from '../components/QuestionModal';
@@ -12,15 +12,17 @@ const Tab1: React.FC = () => {
   const [solution, setSolution] = useState('');
   const [pastQuestions, setPastQuestions] = useState<{ question: string, solution: string }[]>([]);
   const [selectedQuestion, setSelectedQuestion] = useState<{ question: string, solution: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
- 
   const handleSolveQuestion = async () => {
+    setIsLoading(true);
     const result = await solveQuestion(question);
     setSolution(result);
 
     const questions = await getPastQuestions(question);
     console.log(questions);
     setPastQuestions(questions);
+    setIsLoading(false);
   };
 
   const handleCardClick = (question: string, solution: string) => {
@@ -35,13 +37,13 @@ const Tab1: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Math Solver</IonTitle>
+          <IonTitle>MathSolver</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Math Solver</IonTitle>
+            <IonTitle size="large">MathSolver</IonTitle>
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Tab 1 page" />
@@ -53,24 +55,30 @@ const Tab1: React.FC = () => {
             border: '1px solid rgba(255, 255, 255, .3)',
             boxShadow: '0 0 8px rgba(0, 0, 0, .2)'
           }} />
-         <IonButton expand="block" onClick={handleSolveQuestion}>Solve Question</IonButton>
-         {solution && <p> Solution:  <MathTextDisplay content={solution} /></p>}
+          <IonButton expand="block" onClick={handleSolveQuestion}>Solve Question</IonButton>
+          {solution && <p> Solution:  <MathTextDisplay content={solution} /></p>}
 
-         <h2>Past Solved Questions</h2>
-        {pastQuestions && pastQuestions.map((q, index) => (
-          <IonCard key={index} button onClick={() => handleCardClick(q.question, q.solution)}>
-            <IonCardHeader><MathTextDisplay content={q.question}  isInline={true} /></IonCardHeader>
-          </IonCard>
-        ))}
-        
-         {selectedQuestion && (
-          <QuestionModal
-            isOpen={!!selectedQuestion}
-            onClose={handleCloseModal}
-            question={selectedQuestion.question}
-            solution={selectedQuestion.solution}
+          {pastQuestions && <h2>Past similar Questions solved for other users</h2>}
+          {pastQuestions && pastQuestions.map((q, index) => (
+            <IonCard key={index} button onClick={() => handleCardClick(q.question, q.solution)}>
+              <IonCardHeader><MathTextDisplay content={q.question} isInline={true} /></IonCardHeader>
+            </IonCard>
+          ))}
+
+          {selectedQuestion && (
+            <QuestionModal
+              isOpen={!!selectedQuestion}
+              onClose={handleCloseModal}
+              question={selectedQuestion.question}
+              solution={selectedQuestion.solution}
+            />
+          )}
+          
+          <IonLoading
+            isOpen={isLoading}
+            message={'Solving your question...'}
+            spinner="crescent"
           />
-        )}
         </IonContent>
       </IonContent>
     </IonPage>
