@@ -12,7 +12,7 @@ export default defineConfig({
     legacy()
   ],
   build: {
-    outDir: 'dist',
+    outDir: 'public',
   },
   test: {
     globals: true,
