@@ -7,7 +7,7 @@ interface MathTextProps {
 }
 
 const MathTextDisplay: React.FC<MathTextProps> = ({ content, isInline = false }) => {
-  const formattedContent = isInline ? `$${content}$` : `\\[${content}\\]`;
+  const formattedContent = isInline ? `$${content}$` : `${content}`;
 
   return (
     <Latex>
