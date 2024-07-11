@@ -5,6 +5,12 @@ const api = axios.create({
 });
 
 export const solveQuestion = async (question: string) => {
-  const response = await api.post('/solve', { question });
+  const response = await api.post('/math/solve', { question });
   return response.data.solution;
+};
+
+export const getPastQuestions = async (question: string) => {
+  const response = await api.post('/math/similar', { question });
+  console.log(response.data);
+  return response.data;
 };
