@@ -1,0 +1,15 @@
+.sample-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.copy-button-col {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
