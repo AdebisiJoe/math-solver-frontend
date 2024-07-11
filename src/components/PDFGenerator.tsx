@@ -1,18 +1,23 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { IonButton, IonIcon } from '@ionic/react';
 import { downloadOutline } from 'ionicons/icons';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import LatexRenderer from './LatexRenderer';
+import katex from 'katex';
+import 'katex/dist/katex.min.css'; // Import the CSS
 
 interface PDFGeneratorProps {
   question: string;
   solution: string;
 }
 
-const PDFGenerator: React.FC<PDFGeneratorProps> = ({ question, solution }) => {
-  const latexContainerRef = useRef<HTMLDivElement>(null);
+const renderLatexToHTML = (latexString: string): string => {
+  return katex.renderToString(latexString, {
+    throwOnError: false,
+  });
+};
 
+const PDFGenerator: React.FC<PDFGeneratorProps> = ({ question, solution }) => {
   const generatePDF = () => {
     const doc = new jsPDF();
     doc.setFontSize(18);
@@ -21,25 +26,21 @@ const PDFGenerator: React.FC<PDFGeneratorProps> = ({ question, solution }) => {
     doc.text(`Question: ${question}`, 14, 30);
     doc.text('Solution:', 14, 38);
 
-    if (latexContainerRef.current) {
-      const renderedSolution = latexContainerRef.current.innerText;
-      const lines = doc.splitTextToSize(renderedSolution, 180);
-      doc.text(lines, 14, 46);
-    }
+    // Render the solution using katex
+    const renderedSolution = renderLatexToHTML(solution);
+
+    // Split the rendered HTML into lines
+    const lines = doc.splitTextToSize(renderedSolution, 180);
+    doc.text(lines, 14, 46);
 
     doc.save('math-solution.pdf');
   };
 
   return (
-    <>
-      <div ref={latexContainerRef} style={{ display: 'none' }}>
-        <LatexRenderer latexString={solution} />
-      </div>
-      <IonButton onClick={generatePDF} fill="outline" color="primary">
-        <IonIcon slot="start" icon={downloadOutline} />
-        Download as PDF
-      </IonButton>
-    </>
+    <IonButton onClick={generatePDF} fill="outline" color="primary">
+      <IonIcon slot="start" icon={downloadOutline} />
+      Download as PDF
+    </IonButton>
   );
 };
 
