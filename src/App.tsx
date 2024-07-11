@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, calculatorOutline, appsOutline } from 'ionicons/icons';
+import { clipboardOutline, calculatorOutline, appsOutline } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -75,8 +75,8 @@ const App: React.FC = () => (
             <IonLabel>why this ?</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Past Questions</IonLabel>
+            <IonIcon aria-hidden="true" icon={clipboardOutline} />
+            <IonLabel>Sample Questions</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

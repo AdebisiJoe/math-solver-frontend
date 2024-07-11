@@ -9,7 +9,7 @@ import { solveQuestion, getPastQuestions } from '../services/api';
 import PDFGenerator from '../components/PDFGenerator';
 
 const Tab1: React.FC = () => {
-  const [question, setQuestion] = useState('');
+  const [question, setQuestion] = useState('(3x+6)^2');
   const [solution, setSolution] = useState('');
   const [pastQuestions, setPastQuestions] = useState<{ question: string, solution: string }[]>([]);
   const [selectedQuestion, setSelectedQuestion] = useState<{ question: string, solution: string } | null>(null);
@@ -21,7 +21,6 @@ const Tab1: React.FC = () => {
     setSolution(result);
 
     const questions = await getPastQuestions(question);
-    console.log(questions);
     setPastQuestions(questions);
     setIsLoading(false);
   };
@@ -59,13 +58,16 @@ const Tab1: React.FC = () => {
           <IonButton expand="block" onClick={handleSolveQuestion}>Solve Question</IonButton>
           {solution && (
             <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <PDFGenerator question={question} solution={solution} />
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'right' }}>
                 <p>Solution: <MathTextDisplay content={solution} /></p>
-                <PDFGenerator question={question} solution={solution} />
+                
               </div>
             </div>
           )}
-          {pastQuestions && <h2>Past similar Questions solved for other users</h2>}
+
+          {pastQuestions.length > 0 && <h2>Past similar Questions solved for other users</h2>}
+          
           {pastQuestions && pastQuestions.map((q, index) => (
             <IonCard key={index} button onClick={() => handleCardClick(q.question, q.solution)}>
               <IonCardHeader><MathTextDisplay content={q.question} isInline={true} /></IonCardHeader>
