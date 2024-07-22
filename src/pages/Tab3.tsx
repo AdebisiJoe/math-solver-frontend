@@ -6,16 +6,29 @@ import MathTextDisplay from '../components/MathTextDisplay'; // Make sure to imp
 import './Tab3.css';
 
 const sampleQuestions = [
-  '\\[ \\int \\frac{\\sin^{-1} x}{\\sqrt{1 - x^2}} \\, dx \\]',
-  '\\[ \\int_{0}^{1} \\frac{x^2 - 2x}{(2x + 1)(2x^2 + 1)} \\, dx \\]',
-  '\\[ x^2 - 5x + 6 = 0 \\]',
-  '\\[ (a + b)^2 = a^2 + 2ab + b^2 \\]',
-  '\\[ \\frac{d}{dx} (e^x \\sin x) \\]',
-  '\\[ \\sum_{n=1}^{\\infty} \\frac{1}{n^2} \\]',
-  '\\[ \\int e^x \\cos x \\, dx \\]',
-  '\\[ \\lim_{{x \\to 0}} \\frac{\\sin x}{x} \\]',
-  '\\[ \\int \\frac{1}{x \\ln x} \\, dx \\]',
-  '\\[ \\frac{d}{dx} (\\ln x) = \\frac{1}{x} \\]',
+  { type: "algebra", question: '\\[ x^2 - 5x + 6 = 0 \\]' },
+  { type: "algebra", question: '\\[ (a + b)^2 = a^2 + 2ab + b^2 \\]' },
+  { type: "calculus", question: '\\[ \\int_{0}^{1} \\frac{x^2 - 2x}{(2x + 1)(2x^2 + 1)} \\, dx \\]' },
+  { type: "calculus", question: '\\[ \\frac{d}{dx} (e^x \\sin x) \\]' },
+  { type: "geometry", question: '\\[ \\text{Find the area of a triangle with base } b \\text{ and height } h. \\]' },
+  { type: "geometry", question: '\\[ \\text{Calculate the circumference of a circle with radius } r. \\]' },
+  { type: "trigonometry", question: '\\[ \\sin^2 \\theta + \\cos^2 \\theta = 1 \\]' },
+  { type: "trigonometry", question: '\\[ \\tan(\\theta) = \\frac{\\sin(\\theta)}{\\cos(\\theta)} \\]' },
+  { type: "statistics", question: '\\[ \\text{Calculate the mean of the following data set: } 2, 4, 6, 8, 10. \\]' },
+  { type: "statistics", question: '\\[ \\text{Find the variance of the data set: } 3, 7, 7, 19, 24. \\]' },
+  { type: "arithmetic", question: '\\[ 15 + 27 = ? \\]' },
+  { type: "arithmetic", question: '\\[ 45 \\div 5 = ? \\]' },
+  { type: "number theory", question: '\\[ \\text{Find the greatest common divisor of } 48 \\text{ and } 60. \\]' },
+  { type: "number theory", question: '\\[ \\text{Determine if } 29 \\text{ is a prime number.} \\]' },
+  { type: "combinatorics", question: '\\[ \\text{How many ways can you arrange 5 books on a shelf?} \\]' },
+  { type: "combinatorics", question: '\\[ \\text{How many subsets can be made from a set with 4 elements?} \\]' },
+  { type: "probability", question: '\\[ \\text{What is the probability of rolling a 3 on a fair six-sided die?} \\]' },
+  { type: "probability", question: '\\[ \\text{Find the probability of drawing an ace from a standard deck of cards.} \\]' },
+  { type: "linear algebra", question: '\\[ A = \\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}, \\ B = \\begin{pmatrix} 5 & 6 \\\\ 7 & 8 \\end{pmatrix} \\text{, find } A + B \\]' },
+  { type: "linear algebra", question: '\\[ \\text{Find the determinant of the matrix } \\begin{pmatrix} 2 & 3 \\\\ 1 & 4 \\end{pmatrix} \\]' },
+  { type: "differential equations", question: '\\[ \\frac{d^2 y}{dx^2} + y = 0 \\]' },
+  { type: "differential equations", question: '\\[ y\' = xy \\]'
+  },
 ];
 
 const Tab3: React.FC = () => {
@@ -33,17 +46,18 @@ const Tab3: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
-          {sampleQuestions.map((question, index) => (
+          {sampleQuestions.map((item, index) => (
             <IonRow key={index} className="sample-question">
               <IonCol size="10">
                 <IonText>
                   <p>
-                    <MathTextDisplay content={question} />
+                    <MathTextDisplay content={item.question} />
                   </p>
+                  <IonText>{item.type}</IonText>
                 </IonText>
               </IonCol>
               <IonCol size="2" className="copy-button-col">
-                <CopyToClipboard text={question}>
+                <CopyToClipboard text={item.question}>
                   <IonButton fill="clear">
                     <IonIcon slot="icon-only" icon={clipboardOutline} />
                   </IonButton>
