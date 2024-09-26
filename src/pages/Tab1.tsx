@@ -5,6 +5,7 @@ import Mathfield from '../components/mathlive/Mathfield';
 import QuestionModal from '../components/QuestionModal';
 import './Tab1.css';
 import MathTextDisplay from '../components/MathTextDisplay';
+import MarkdownLatexRenderer from '../components/MarkdownLatexRenderer';
 import { solveQuestion, getPastQuestions } from '../services/api';
 import PDFGenerator from '../components/PDFGenerator';
 
@@ -60,7 +61,7 @@ const Tab1: React.FC = () => {
             <div>
               <PDFGenerator question={question} solution={solution} />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'right' }}>
-                <p>Solution: <MathTextDisplay content={solution} /></p>
+                <p>Solution: <MarkdownLatexRenderer content={solution} /></p>
                 
               </div>
             </div>
@@ -70,7 +71,7 @@ const Tab1: React.FC = () => {
           
           {pastQuestions && pastQuestions.map((q, index) => (
             <IonCard key={index} button onClick={() => handleCardClick(q.question, q.solution)}>
-              <IonCardHeader><MathTextDisplay content={q.question} isInline={true} /></IonCardHeader>
+              <IonCardHeader><MarkdownLatexRenderer content={q.question}  /></IonCardHeader>
             </IonCard>
           ))}
 

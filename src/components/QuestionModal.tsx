@@ -1,6 +1,7 @@
 import React from 'react';
 import { IonModal, IonButton, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';
 import MathTextDisplay from './MathTextDisplay';
+import MarkdownLatexRenderer from './MarkdownLatexRenderer';
 
 interface QuestionModalProps {
   isOpen: boolean;
@@ -20,9 +21,9 @@ const QuestionModal: React.FC<QuestionModalProps> = ({ isOpen, onClose, question
       </IonHeader>
       <IonContent className="ion-padding">
         <h2>Question</h2>
-        <p><MathTextDisplay content={question} isInline={true} /></p>
+        <p><MarkdownLatexRenderer content={question} /></p>
         <h2>Solution</h2>
-        <p><MathTextDisplay content={solution} /></p>
+        <p><MarkdownLatexRenderer content={solution} /></p>
       </IonContent>
     </IonModal>
   );

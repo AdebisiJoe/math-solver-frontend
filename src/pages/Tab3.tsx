@@ -3,6 +3,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonText, IonIcon,
 import { clipboardOutline } from 'ionicons/icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import MathTextDisplay from '../components/MathTextDisplay'; // Make sure to import your MathTextDisplay component
+import MarkdownLatexRenderer from '../components/MarkdownLatexRenderer';
 import './Tab3.css';
 
 const sampleQuestions = [
@@ -51,7 +52,7 @@ const Tab3: React.FC = () => {
               <IonCol size="10">
                 <IonText>
                   <p>
-                    <MathTextDisplay content={item.question} />
+                    <MarkdownLatexRenderer content={item.question} />
                   </p>
                   <IonText>{item.type}</IonText>
                 </IonText>
