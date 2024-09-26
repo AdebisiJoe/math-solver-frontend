@@ -17,10 +17,10 @@ const Tab1: React.FC = () => {
 
   const handleSolveQuestion = async () => {
     setIsLoading(true);
-    const result = await solveQuestion(question, true);
+    const result = await solveQuestion(question, false);
     setSolution(result);
 
-    const questions = await getPastQuestions(question, true);
+    const questions = await getPastQuestions(question, false);
     setPastQuestions(questions);
     setIsLoading(false);
   };

@@ -1,12 +1,11 @@
 import axios from 'axios';
 
+
+
 const api = axios.create({
   baseURL: 'https://math-solver-backend.onrender.com', 
 });
 
-// const api = axios.create({
-//   baseURL: 'http://localhost:3000',
-// });
 
 export const solveQuestion = async (question: string, useNeo4j = false) => {
   try {
