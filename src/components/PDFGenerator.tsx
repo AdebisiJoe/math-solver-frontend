@@ -2,38 +2,35 @@ import React from 'react';
 import { IonButton, IonIcon } from '@ionic/react';
 import { downloadOutline } from 'ionicons/icons';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import katex from 'katex';
-import 'katex/dist/katex.min.css'; // Import the CSS
+import html2canvas from 'html2canvas';
 
 interface PDFGeneratorProps {
-  question: string;
-  solution: string;
+  contentRef: React.RefObject<HTMLDivElement>;
 }
 
-const renderLatexToHTML = (latexString: string): string => {
-  return katex.renderToString(latexString, {
-    throwOnError: false,
-  });
-};
+const PDFGenerator: React.FC<PDFGeneratorProps> = ({ contentRef }) => {
+  const generatePDF = async () => {
+    if (contentRef.current) {
+      const canvas = await html2canvas(contentRef.current);
+      const imgData = canvas.toDataURL('image/png');
 
-const PDFGenerator: React.FC<PDFGeneratorProps> = ({ question, solution }) => {
-  const generatePDF = () => {
-    const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text('Math Solver Solution', 14, 22);
-    doc.setFontSize(14);
-    doc.text(`Question: ${question}`, 14, 30);
-    doc.text('Solution:', 14, 38);
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: 'a4'
+      });
 
-    // Render the solution using katex
-    const renderedSolution = renderLatexToHTML(solution);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 30;
 
-    // Split the rendered HTML into lines
-    const lines = doc.splitTextToSize(renderedSolution, 180);
-    doc.text(lines, 14, 46);
-
-    doc.save('math-solution.pdf');
+      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      pdf.save('math-solution.pdf');
+    }
   };
 
   return (

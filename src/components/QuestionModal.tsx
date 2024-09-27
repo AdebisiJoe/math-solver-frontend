@@ -21,9 +21,9 @@ const QuestionModal: React.FC<QuestionModalProps> = ({ isOpen, onClose, question
       </IonHeader>
       <IonContent className="ion-padding">
         <h2>Question</h2>
-        <p><MarkdownLatexRenderer content={question} /></p>
+          <MarkdownLatexRenderer content={question} />
         <h2>Solution</h2>
-        <p><MarkdownLatexRenderer content={solution} /></p>
+        <MarkdownLatexRenderer content={solution} />
       </IonContent>
     </IonModal>
   );
