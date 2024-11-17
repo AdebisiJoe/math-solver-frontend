@@ -7,6 +7,12 @@ const api = axios.create({
 });
 
 
+// const api = axios.create({
+//   baseURL: 'http://127.0.0.1:8000', 
+// });
+
+
+
 export const solveQuestion = async (question: string, useNeo4j = false) => {
   try {
     const response = await api.post('/math/solve', { question, useNeo4j });

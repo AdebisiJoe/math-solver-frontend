@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeRaw from 'rehype-raw';
 import rehypeKatex from 'rehype-katex';
-
+import 'katex/dist/katex.min.css';
 
 interface MarkdownLatexRendererProps {
   content: string; // Define the type for markdownText as a string

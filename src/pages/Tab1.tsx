@@ -6,7 +6,7 @@ import QuestionModal from '../components/QuestionModal';
 import './Tab1.css';
 import MarkdownLatexRenderer from '../components/MarkdownLatexRenderer';
 import { solveQuestion, getPastQuestions } from '../services/api';
-// import PDFGenerator from '../components/PDFGenerator';
+import PDFGenerator from '../components/PDFGenerator';
 
 const Tab1: React.FC = () => {
   const [question, setQuestion] = useState('(3x+6)^2');
@@ -68,7 +68,7 @@ const Tab1: React.FC = () => {
 
               </div>
               <div style={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}>
-                {/* <PDFGenerator contentRef={contentRef} /> */}
+                <PDFGenerator contentRef={contentRef} />
               </div>
             </div>
           )}
